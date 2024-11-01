@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Manrope:wght@200..800&family=Oxanium:wght@200..800&family=Quicksand:wght@300..700&family=Thasadith:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Oxanium:wght@200..800&family=Quicksand:wght@300..700&family=Thasadith:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Thasadith:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -17,11 +19,73 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
+
+  font-style: normal;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+@keyframes reveal {
+  0% {
+    transform: scale(0.5) rotateY(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes hide {
+  0% {
+    transform: scale(1) rotateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5) rotateY(90deg);
+    opacity: 0;
+  }
+}
+
+.animate-reveal {
+  animation: reveal 0.3s forwards;
+}
+
+.animate-hide {
+  animation: hide 0.3s forwards;
+}
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translatex(-15px);
+  }
+  60% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s;
+}
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+ /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+}
+
+.box-shadow{
+  box-shadow: 10px 10px 10px 10px;
+}
 }

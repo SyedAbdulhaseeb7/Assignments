@@ -1,115 +1,117 @@
+// app/page.js
+import { useState,useEffect } from "react";
 import Image from "next/image";
 import localFont from "next/font/local";
+import Modal from "../components/Model"; // Updated import for the Modal
+import Layout from "./layout";
+import GameCard from "@/components/GameCard";
+import games from "@/components/Games";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const Home = () => {
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [hoveredGame, setHoveredGame] = useState(null);
+  const [hoverTimer, setHoverTimer] = useState(null);
 
-export default function Home() {
+  const openModal = (game) => setSelectedGame(game);
+
+  const closeModal = () => {
+    setSelectedGame(null);
+    setHoveredGame(null);
+    clearTimeout(hoverTimer);
+  };
+
+  
+
+  const handleGameClick = (game) => {
+    openModal(game); // Open modal on click
+  };
+
+
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col justify-center items-center relative overflow-auto">
+      <video
+        src="https://video.cloudflare.steamstatic.com/store_trailers/257065848/movie480_vp9.webm?t=1729096120"
+        autoPlay
+        loop
+        muted
+        className="absolute w-full lg:h-full h-[100rem] lg:object-cover object-cover z-0 opacity-30"
+      >
+        Your browser does not support the video tag.
+      </video>
+      <section className="text-center py-10 z-10 relative">
+        {/* Games Grid */}
+        <div className="container grid grid-cols-2 lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-3 ">
+          {games.map((game, index) => (
+            <div
+              key={index}
+              className={`backdrop-blur-sm p-[3px] transform transition-transform duration-300 cursor-pointer ${hoveredGame === game ? 'animate-bounce' : ''}`}
+             
+       
+              onClick={() => handleGameClick(game)} 
+            >
+              <img
+                src={game.imageUrl}
+                alt={game.title}
+                width={400}
+                height={300}
+                className=" object-contain  w-72 h-auto"
+              />
+              <h3 className="text-sm  ">{game.title}</h3>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {selectedGame && (
+        <Modal onClose={closeModal}>
+          <div className=" bg-white/5 w-full h-full flex flex-col md:flex-row overflow-auto">
+          <div className="absolute left-5 top-5 text-xl text-white ">oneTake</div>  
+            {/* Video Section */}
+            <div className="w-full md:w-[100%] h-full md:h-full flex lg:mt-0 mt-16">
+              <video
+                loop
+                autoPlay
+ 
+                className="overflow-auto w-full h-full object-contain"
+              >
+                <source src={selectedGame.videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            {/* Game Details Section */}
+          {/* Game Details Section */}
+          <div className="w-full  h-full">
+              {/* Pass the selected game data directly to GameCard */}
+              <GameCard game={selectedGame} />
+              <button
+                onClick={closeModal}
+                className="absolute top-5 right-5 "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="feather feather-x"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+           
+              
+              </button>
+            </div>
+            </div>
+        </Modal>
+      )}
     </div>
   );
-}
+};
+
+export default Home;
