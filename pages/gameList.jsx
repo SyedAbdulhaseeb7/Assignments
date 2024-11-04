@@ -607,7 +607,7 @@ const TopMovies = () => {
       {selectedMovie && (
   <div className="fixed inset-0 p-2 flex justify-center items-center z-50">
     <div className="absolute inset-0 bg-black bg-opacity-50" />
-    <div className="bg-black/5 bg-opacity-20 backdrop-blur-sm rounded-lg p-6 relative z-20 w-full h-full mx-4 justify-center items-center">
+    <div className="bg-black/5 bg-opacity-20 backdrop-blur-sm p-3 relative z-20 w-full h-full  ">
       <iframe
         width="100%"
         src={selectedMovie.videoUrl}
